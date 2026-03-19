@@ -27,24 +27,24 @@ GRANT ALL PRIVILIGES ON DATABASE accountmanagerdb TO amuser;
 ```
 - At this point you should be successfully connected to the database
 - When you will first time run the application, there will be a few users introduced in the database, to have an initial
-batch to test/operate with. 
+batch to test/operate with. You can take a look at the changesets files unders `resources/db/changelog`.
 
 ## Architecture
 ### Controller layer
  Exposes REST endpoints and handles HTTP request/response
 ```markdown
- | Method   | Endpoint                  |Description|
- | -------- | --------                  | --------  |
- | POST     | /accounts/create          |  Create a new customer account |
- | GET      | /accounts                 |  Retrieve all customer accounts |
- | GET      | /accounts/{id}            |  Retrieve a customer account by given id |
+ | Method   | Endpoint                  | Description                                                            |
+ | -------- | ------------------------- | ---------------------------------------------------------------------  |
+ | POST     | /accounts/create          |  Create a new customer account                                         |
+ | GET      | /accounts                 |  Retrieve all customer accounts                                        |
+ | GET      | /accounts/{id}            |  Retrieve a customer account by given id                               |
  | PATCH    | /accounts/{id}/deposit    |  Deposits money for a given id. Provide the amount in the request body |
  | PATCH    | /accounts/{id}/withdraw   |  Withdraw money for a given id. Provide the amount in the request body |
 ```
 
 ```markdown
- | Method   | Endpoint                  |Description|
- | -------- | --------                  | --------  |
+ | Method   | Endpoint                  | Description                                         |
+ | -------- | ------------------------- | --------------------------------------------------  |
  | GET      | /accounts/{id}/history    |  Retrieve all history on a specific customer account|
 ``` 
 ### Request body examples 

@@ -14,11 +14,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountManagerServiceTest {
@@ -38,7 +38,11 @@ public class AccountManagerServiceTest {
         customerAccount.setEmail("alice3@example.com");
         customerAccount.setAccountBalance(BigDecimal.valueOf(1000.0));
 
+        CustomerAccount savedCustomerAccount = mock(CustomerAccount.class);
+        when(savedCustomerAccount.getId()).thenReturn(1L);
+
         when(accountManagerRepository.existsByEmail(customerAccount.getEmail())).thenReturn(false);
+        when(accountManagerRepository.save(customerAccount)).thenReturn(savedCustomerAccount);
 
         accountManagerService.createCustomer(customerAccount);
 

@@ -78,7 +78,7 @@ public class AccountManagerControllerTest {
 
         String url = PATH + "/create";
 
-        ResponseEntity<String > responseEntity = testRestTemplate.postForEntity(url, customerAccount, String.class);
+        ResponseEntity<String> responseEntity = testRestTemplate.postForEntity(url, customerAccount, String.class);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals(EmailAlreadyExistsException.MESSAGE, responseEntity.getBody());

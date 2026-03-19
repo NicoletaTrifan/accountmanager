@@ -33,7 +33,18 @@ public class AccountManagerService {
     @Transactional
     public void createCustomer(CustomerAccount customerAccount) {
         if (!accountManagerRepository.existsByEmail(customerAccount.getEmail())) {
-            accountManagerRepository.save(customerAccount);
+            CustomerAccount savedCustomerAccount = accountManagerRepository.save(customerAccount);
+            // store first deposit on the account
+            if (customerAccount.getAccountBalance().compareTo(BigDecimal.ZERO) > 0) {
+                AccountHistory firstDepositOperation = new AccountHistory(
+                        savedCustomerAccount.getId(),
+                        OperationType.DEPOSIT,
+                        customerAccount.getAccountBalance(),
+                        customerAccount.getAccountBalance(),
+                        LocalDateTime.now()
+                );
+                accountHistoryRepository.save(firstDepositOperation);
+            }
         } else {
             throw new EmailAlreadyExistsException();
         }

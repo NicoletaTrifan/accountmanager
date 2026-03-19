@@ -67,6 +67,8 @@ public class AccountManagerService {
         if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
             throw new InsufficientBalanceException();
         }
+
+        customerAccount.setAccountBalance(newBalance);
         AccountHistory accountHistory = new AccountHistory(id, OperationType.WITHDRAW, amount, customerAccount.getAccountBalance(), LocalDateTime.now());
 
         accountManagerRepository.save(customerAccount);

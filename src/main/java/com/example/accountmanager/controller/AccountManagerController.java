@@ -41,18 +41,18 @@ public class AccountManagerController {
     @PatchMapping("/{id}/deposit")
     public ResponseEntity<Void> depositMoneyForCustomer(@PathVariable Long id, @RequestBody BigDecimal amount) {
         accountManagerService.depositMoneyForCustomer(id, amount);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/withdraw")
     public ResponseEntity<Void> withdrawMoneyForCustomer(@PathVariable Long id, @RequestBody BigDecimal amount) {
         accountManagerService.withdrawMoneyForCustomer(id, amount);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<String> handleCustomerNotFoundException(CustomerNotFoundException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(InsufficientBalanceException.class)

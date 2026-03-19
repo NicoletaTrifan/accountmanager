@@ -108,7 +108,7 @@ public class AccountManagerServiceTest {
         when(accountManagerRepository.findById(anyLong())).thenReturn(Optional.of(customerAccount));
 
         assertThrows(InsufficientBalanceException.class,
-                () ->  accountManagerService.withdrawMoneyForCustomer(1L, BigDecimal.valueOf(700)));
+                () -> accountManagerService.withdrawMoneyForCustomer(1L, BigDecimal.valueOf(700)));
     }
 
 }

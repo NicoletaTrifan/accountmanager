@@ -29,7 +29,8 @@ public class AccountHistory {
 
     private LocalDateTime createdAt;
 
-    public AccountHistory() {}
+    public AccountHistory() {
+    }
 
     public AccountHistory(Long accountId,
                           OperationType operationType,

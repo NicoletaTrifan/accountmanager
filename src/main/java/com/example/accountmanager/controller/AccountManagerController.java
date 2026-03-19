@@ -3,7 +3,6 @@ package com.example.accountmanager.controller;
 import com.example.accountmanager.exception.CustomerNotFoundException;
 import com.example.accountmanager.exception.InsufficientBalanceException;
 import com.example.accountmanager.exception.EmailAlreadyExistsException;
-import com.example.accountmanager.model.AccountHistory;
 import com.example.accountmanager.model.CustomerAccount;
 import com.example.accountmanager.service.AccountManagerService;
 import org.springframework.http.HttpStatus;
@@ -57,7 +56,7 @@ public class AccountManagerController {
     }
 
     /**
-     * @param id the unique identifier for the customer account
+     * @param id     the unique identifier for the customer account
      * @param amount that is wanted to be deposited on the account
      * @return a {@link ResponseEntity} with {@link HttpStatus} {@code 200 OK}
      * @throws CustomerNotFoundException if a customer with given id is not found
@@ -69,10 +68,10 @@ public class AccountManagerController {
     }
 
     /**
-     * @param id the unique identifier for the customer account
+     * @param id     the unique identifier for the customer account
      * @param amount that is wanted to be withdrawn on the account
      * @return a {@link ResponseEntity} with {@link HttpStatus} {@code 200 OK}
-     * @throws CustomerNotFoundException if a customer with given id is not found
+     * @throws CustomerNotFoundException    if a customer with given id is not found
      * @throws InsufficientBalanceException if a customer tries to withdraw more than it is available
      */
     @PatchMapping("/{id}/withdraw")

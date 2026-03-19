@@ -23,6 +23,7 @@ public class AccountHistoryController {
 
     /**
      * Retrieves the history of operations on a specific account
+     *
      * @param accountId the identifier of the account
      * @return a {@link ResponseEntity} with a list of {@link AccountHistory} records
      * @throws CustomerNotFoundException if a customer with given id is not found

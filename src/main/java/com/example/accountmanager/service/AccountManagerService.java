@@ -46,6 +46,7 @@ public class AccountManagerService {
 
     /**
      * Created a new customer account
+     *
      * @param customerAccount the customer account to be created
      * @throws EmailAlreadyExistsException if a customer with the same email address already exists
      */
@@ -71,6 +72,7 @@ public class AccountManagerService {
 
     /**
      * Retrieved details about a specific customer account
+     *
      * @param id unique identifier for customer account
      * @return a {@link CustomerAccount}
      * @throws CustomerNotFoundException if a customer with the given id does not exist
@@ -83,7 +85,7 @@ public class AccountManagerService {
     }
 
     /**
-     * @param id unique identifier for customer account
+     * @param id     unique identifier for customer account
      * @param amount that is wanted to be deposited on the account
      * @throws CustomerNotFoundException if a customer with the given id does not exist
      */
@@ -101,7 +103,7 @@ public class AccountManagerService {
     }
 
     /**
-     * @param id unique identifier for customer account
+     * @param id     unique identifier for customer account
      * @param amount that is wanted to be withdrawn on the account
      * @throws InsufficientBalanceException if it is intended to go below 0 balance
      */

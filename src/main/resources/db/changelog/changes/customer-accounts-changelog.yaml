@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: customer-account-001
+      author: Nicoleta
+      changes:
+        - createTable:
+            tableName: customer_accounts
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_balance
+                  type: NUMERIC(19,2)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: customer-account-002
+      author: Nicoleta
+      changes:
+        - addUniqueConstraint:
+            tableName: customer_accounts
+            columnNames: email
+            constraintName: uq_customer_accounts_email
+        - sql: |
+            ALTER TABLE customer_accounts ADD CONSTRAINT chk_account_balance CHECK (account_balance >= 0);
+  - changeSet:
+      id: customer-account-003
+      author: Nicoleta
+      changes:
+        - insert:
+            tableName: customer_accounts
+            columns:
+              - column:
+                  name: name
+                  value: Jane Doe
+              - column:
+                  name: email
+                  value: janedoe@example.com
+              - column:
+                  name: account_balance
+                  valueNumeric: 1000
+        - insert:
+            tableName: customer_accounts
+            columns:
+              - column:
+                  name: name
+                  value: Alice Sunny
+              - column:
+                  name: email
+                  value: alicesunny@example.com
+              - column:
+                  name: account_balance
+                  valueNumeric: 200
+        - insert:
+            tableName: customer_accounts
+            columns:
+              - column:
+                  name: name
+                  value: Mark Sweep
+              - column:
+                  name: email
+                  value: marksweep@example.com
+              - column:
+                  name: account_balance
+                  valueNumeric: 2000
+

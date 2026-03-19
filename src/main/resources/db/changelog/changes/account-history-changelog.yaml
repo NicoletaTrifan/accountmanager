@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: account-history-001
+      author: Nicoleta
+      changes:
+        - createTable:
+            tableName: account_history
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: account_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    referencedTableName: customer_accounts
+                    referencedColumnNames: id
+                    foreignKeyName: fk_account_history_customer_accounts
+              - column:
+                  name: operation_type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance_after
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

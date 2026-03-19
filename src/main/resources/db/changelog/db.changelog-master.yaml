@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/customer-accounts-changelog.yaml
+  - include:
+      file: db/changelog/changes/account-history-changelog.yaml

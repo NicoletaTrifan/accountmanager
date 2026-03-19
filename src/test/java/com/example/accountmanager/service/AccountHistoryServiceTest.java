@@ -34,13 +34,24 @@ public class AccountHistoryServiceTest {
 
     @Test
     public void getAccountHistoryTest() {
+        // create customer account
         CustomerAccount customerAccount1 = new CustomerAccount();
         customerAccount1.setName("Alice");
         customerAccount1.setEmail("alice3@example.com");
         customerAccount1.setAccountBalance(BigDecimal.valueOf(1000.0));
 
-        AccountHistory accountHistoryOperation1 = new AccountHistory(1L, OperationType.DEPOSIT, BigDecimal.valueOf(50.0), BigDecimal.valueOf(1050.0), LocalDateTime.now());
-        AccountHistory accountHistoryOperation2 = new AccountHistory(1L, OperationType.DEPOSIT, BigDecimal.valueOf(50.0), BigDecimal.valueOf(1100.0), LocalDateTime.now());
+        // create a history of operations
+        AccountHistory accountHistoryOperation1 = new AccountHistory(
+                1L,
+                OperationType.DEPOSIT,
+                BigDecimal.valueOf(50.0),
+                BigDecimal.valueOf(1050.0),
+                LocalDateTime.now());
+        AccountHistory accountHistoryOperation2 = new AccountHistory(1L,
+                OperationType.DEPOSIT,
+                BigDecimal.valueOf(50.0),
+                BigDecimal.valueOf(1100.0),
+                LocalDateTime.now());
 
         when(accountManagerRepository.findById(1L)).thenReturn(Optional.of(customerAccount1));
         when(accountHistoryRepository.findByAccountId(1L)).thenReturn(Optional.of(List.of(accountHistoryOperation1, accountHistoryOperation2)));
@@ -50,6 +61,5 @@ public class AccountHistoryServiceTest {
         verify(accountManagerRepository).findById(1L);
         verify(accountHistoryRepository).findByAccountId(1L);
         assertEquals(2, accountHistory.size());
-
     }
 }

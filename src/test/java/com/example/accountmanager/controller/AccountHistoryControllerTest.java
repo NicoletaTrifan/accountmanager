@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -22,9 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountHistoryControllerTest {
-
-    @LocalServerPort
-    private int port;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -49,18 +45,20 @@ public class AccountHistoryControllerTest {
 
     @Test
     public void getAccountHistoryTest() {
+        // create customer
         CustomerAccount customerAccount = new CustomerAccount();
         customerAccount.setName("Alice");
         customerAccount.setEmail("alice3@example.com");
         customerAccount.setAccountBalance(BigDecimal.valueOf(1000));
         CustomerAccount savedCustomerAccount = accountManagerRepository.save(customerAccount);
 
+        // perform a few operations on the account
         accountManagerService.depositMoneyForCustomer(savedCustomerAccount.getId(), BigDecimal.valueOf(50));
         accountManagerService.withdrawMoneyForCustomer(savedCustomerAccount.getId(), BigDecimal.valueOf(150));
 
         String url = PATH + savedCustomerAccount.getId() + "/history";
-
         ResponseEntity<AccountHistory[]> response = testRestTemplate.getForEntity(url, AccountHistory[].class);
+
         List<AccountHistory> accountHistoryList = Arrays.asList(response.getBody());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());

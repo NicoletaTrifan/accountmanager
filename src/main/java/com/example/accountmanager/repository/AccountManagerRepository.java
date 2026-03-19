@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+/**
+ * Repository for accessing {@link CustomerAccount} data
+ */
 public interface AccountManagerRepository extends JpaRepository<CustomerAccount, Long> {
 
     Optional<CustomerAccount> findById(Long id);

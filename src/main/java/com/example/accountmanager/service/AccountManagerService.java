@@ -15,6 +15,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Service responsible for retrieving account details and performing operations on the customer account.
+ * Ensures that:
+ * <ul>
+ *     <li>Customer account can be created</li>
+ *     <li>No two customers with the same email address can exist</li>
+ *     <li>We can retrieve customer account details</li>
+ *     <li>Account balance does not go below 0</li>
+ *     <li>All operations are stored in history</li>
+ * </ul>
+ */
 @Service
 public class AccountManagerService {
 
@@ -26,10 +37,18 @@ public class AccountManagerService {
         this.accountHistoryRepository = accountHistoryRepository;
     }
 
+    /**
+     * @return a list of all existing {@link CustomerAccount}
+     */
     public List<CustomerAccount> getAllCustomers() {
         return accountManagerRepository.findAll();
     }
 
+    /**
+     * Created a new customer account
+     * @param customerAccount the customer account to be created
+     * @throws EmailAlreadyExistsException if a customer with the same email address already exists
+     */
     @Transactional
     public void createCustomer(CustomerAccount customerAccount) {
         if (!accountManagerRepository.existsByEmail(customerAccount.getEmail())) {
@@ -50,6 +69,12 @@ public class AccountManagerService {
         }
     }
 
+    /**
+     * Retrieved details about a specific customer account
+     * @param id unique identifier for customer account
+     * @return a {@link CustomerAccount}
+     * @throws CustomerNotFoundException if a customer with the given id does not exist
+     */
     public CustomerAccount getCustomerById(Long id) {
         if (accountManagerRepository.findById(id).isEmpty()) {
             throw new CustomerNotFoundException();
@@ -57,6 +82,11 @@ public class AccountManagerService {
         return accountManagerRepository.findById(id).orElseThrow();
     }
 
+    /**
+     * @param id unique identifier for customer account
+     * @param amount that is wanted to be deposited on the account
+     * @throws CustomerNotFoundException if a customer with the given id does not exist
+     */
     @Transactional
     public void depositMoneyForCustomer(Long id, BigDecimal amount) {
         CustomerAccount customerAccount = accountManagerRepository.findById(id).orElseThrow(CustomerNotFoundException::new);
@@ -70,6 +100,11 @@ public class AccountManagerService {
         accountHistoryRepository.save(accountHistory);
     }
 
+    /**
+     * @param id unique identifier for customer account
+     * @param amount that is wanted to be withdrawn on the account
+     * @throws InsufficientBalanceException if it is intended to go below 0 balance
+     */
     @Transactional
     public void withdrawMoneyForCustomer(Long id, BigDecimal amount) {
         CustomerAccount customerAccount = accountManagerRepository.findById(id).orElseThrow(CustomerNotFoundException::new);

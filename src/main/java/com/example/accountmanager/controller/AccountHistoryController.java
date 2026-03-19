@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller responsible for managing account history operations.
+ */
 @RestController
 @RequestMapping("/accounts/{accountId}/history")
 public class AccountHistoryController {
@@ -18,6 +21,12 @@ public class AccountHistoryController {
         this.accountHistoryService = accountHistoryService;
     }
 
+    /**
+     * Retrieves the history of operations on a specific account
+     * @param accountId the identifier of the account
+     * @return a {@link ResponseEntity} with a list of {@link AccountHistory} records
+     * @throws CustomerNotFoundException if a customer with given id is not found
+     */
     @GetMapping
     public ResponseEntity<List<AccountHistory>> getAccountHistory(@PathVariable Long accountId) {
         return ResponseEntity.ok(accountHistoryService.getAccountHistory(accountId));

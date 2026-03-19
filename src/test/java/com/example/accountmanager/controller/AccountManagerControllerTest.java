@@ -25,9 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountManagerControllerTest {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
     private TestRestTemplate testRestTemplate;
 
@@ -55,8 +52,8 @@ public class AccountManagerControllerTest {
         customerAccount.setName("Alice");
         customerAccount.setEmail("alice3@example.com");
         customerAccount.setAccountBalance(BigDecimal.valueOf(1000));
-        String url = PATH + "/create";
 
+        String url = PATH + "/create";
         ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity(url, customerAccount, Void.class);
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -71,14 +68,14 @@ public class AccountManagerControllerTest {
         customerAccount.setAccountBalance(BigDecimal.valueOf(1000));
         accountManagerService.createCustomer(customerAccount);
 
+        // create a second customer with the same email
         CustomerAccount customerAccount2 = new CustomerAccount();
-        customerAccount.setName("Alice");
-        customerAccount.setEmail("alice3@example.com");
-        customerAccount.setAccountBalance(BigDecimal.valueOf(1000));
+        customerAccount2.setName("Mary");
+        customerAccount2.setEmail("alice3@example.com");
+        customerAccount2.setAccountBalance(BigDecimal.valueOf(1000));
 
         String url = PATH + "/create";
-
-        ResponseEntity<String> responseEntity = testRestTemplate.postForEntity(url, customerAccount, String.class);
+        ResponseEntity<String> responseEntity = testRestTemplate.postForEntity(url, customerAccount2, String.class);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals(EmailAlreadyExistsException.MESSAGE, responseEntity.getBody());
@@ -105,7 +102,9 @@ public class AccountManagerControllerTest {
         String url = PATH + "/" + savedCustomerAccount.getId();
 
         ResponseEntity<CustomerAccount> responseEntity = testRestTemplate.getForEntity(url, CustomerAccount.class);
+
         CustomerAccount responseCustomerAccount = responseEntity.getBody();
+
         assertEquals("Alice", responseCustomerAccount.getName());
         assertEquals("alice3@example.com", responseCustomerAccount.getEmail());
         assertEquals(new BigDecimal("1000.00"), responseCustomerAccount.getAccountBalance());
@@ -213,10 +212,6 @@ public class AccountManagerControllerTest {
         customerAccount3.setName("Mary J");
         customerAccount3.setEmail("maryj@example.com");
         customerAccount3.setAccountBalance(BigDecimal.valueOf(400));
-
-        CustomerAccount savedCustomerAccount = accountManagerRepository.save(customerAccount);
-        CustomerAccount savedCustomerAccount2 = accountManagerRepository.save(customerAccount2);
-        CustomerAccount savedCustomerAccount3 = accountManagerRepository.save(customerAccount3);
 
     }
 

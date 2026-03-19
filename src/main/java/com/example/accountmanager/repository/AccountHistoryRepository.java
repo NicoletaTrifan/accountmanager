@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository for accessing {@link AccountHistory data}
+ */
 public interface AccountHistoryRepository extends JpaRepository<AccountHistory, Long> {
 
     Optional<List<AccountHistory>> findByAccountId(Long accountId);

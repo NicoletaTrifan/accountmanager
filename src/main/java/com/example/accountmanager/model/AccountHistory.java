@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing a record of one operation (deposit/withdrawal) performed to the account. Stores
+ * information about when was the operation done, what kind of operation, amount and the amount left on the account
+ * after it was done.
+ */
 @Entity
 public class AccountHistory {
 

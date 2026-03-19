@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Service responsible for retrieving account history records.
+ * Ensures that account exists before fetching its associated data.
+ */
 @Service
 public class AccountHistoryService {
 
@@ -20,6 +24,11 @@ public class AccountHistoryService {
         this.accountManagerRepository = accountManagerRepository;
     }
 
+    /**
+     * @param accountId unique identifier for the customer account
+     * @return a list of {@link AccountHistory} records, or an empty list if no operations were done
+     * @throws CustomerNotFoundException if the account does not exist
+     */
     public List<AccountHistory> getAccountHistory(Long accountId) {
         accountManagerRepository.findById(accountId).orElseThrow(CustomerNotFoundException::new);
         return accountHistoryRepository.findByAccountId(accountId).orElseGet(Collections::emptyList);

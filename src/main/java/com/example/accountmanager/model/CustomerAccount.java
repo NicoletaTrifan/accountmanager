@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 
 import java.math.BigDecimal;
 
+/**
+ * Entity representing a record of one customer. Stores basic account details along with account balance.
+ */
 @Entity
 @Table(name = "customer_accounts")
 public class CustomerAccount {

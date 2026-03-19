@@ -87,6 +87,7 @@ is thrown.
 - SpringBoot 3.5.0
 - PostgreSQL
 - Liquibase
+- Gradle
 
 ### Run the application 
 1. Clone the repository 

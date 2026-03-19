@@ -213,6 +213,10 @@ public class AccountManagerControllerTest {
         customerAccount3.setEmail("maryj@example.com");
         customerAccount3.setAccountBalance(BigDecimal.valueOf(400));
 
+        CustomerAccount savedCustomerAccount = accountManagerRepository.save(customerAccount);
+        CustomerAccount savedCustomerAccount2 = accountManagerRepository.save(customerAccount2);
+        CustomerAccount savedCustomerAccount3 = accountManagerRepository.save(customerAccount3);
+
     }
 
 }
